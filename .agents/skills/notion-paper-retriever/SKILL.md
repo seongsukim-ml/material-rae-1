@@ -9,8 +9,8 @@ Fetch project-relevant papers from Notion with minimal overhead and consistent f
 
 ## Quick start
 1) Query the `Paper` data source.
-2) Apply primary project relation filter.
-3) Fallback to tag and keyword filters when needed.
+2) Search within primary project relation filter by default.
+3) If no match, fallback to full data source search.
 4) Return concise fields in fixed order.
 
 ## Workflow
@@ -33,9 +33,9 @@ After login, restart Codex, then continue.
 ### 2) Apply filters
 1. Primary filter:
    - `Projects` relation contains `412f4daa-a4ff-454f-929e-dab38d3718fe`
+   - Run requested keyword search within this filtered subset first
 2. Fallback filter:
-   - `Tags` contains `Representation Learning`
-   - and (`Short Name` or `Name` or `Summary`) contains `RAE`
+   - If primary filter returns no keyword match, rerun keyword search across the full `Paper` data source
 
 ### 3) Return fields (fixed order)
 1. `Name`
@@ -51,6 +51,5 @@ After login, restart Codex, then continue.
 - Avoid deep synthesis unless explicitly requested.
 
 ### 5) Failure handling
-- If relation/tag fields are missing, report the missing field and fallback to title keyword search.
+- If relation fields are missing, report the missing field and fallback to full data source keyword search.
 - If results are large, return top N (if specified) or newest by year.
-
